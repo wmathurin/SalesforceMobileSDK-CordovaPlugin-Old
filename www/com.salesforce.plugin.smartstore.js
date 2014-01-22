@@ -43,9 +43,9 @@ var SoupIndexSpec = function (path, type) {
  * QuerySpec constructor
  */
 var QuerySpec = function (path) {
- // the kind of query, one of: "exact","range", "like" or "smart":
- // "exact" uses matchKey, "range" uses beginKey and endKey, "like" uses likeKey, "smart" uses smartSql
- this.queryType = "exact";
+    // the kind of query, one of: "exact","range", "like" or "smart":
+    // "exact" uses matchKey, "range" uses beginKey and endKey, "like" uses likeKey, "smart" uses smartSql
+    this.queryType = "exact";
 
     //path for the original IndexSpec you wish to use for search: may be a compound path eg Account.Owner.Name
     this.indexPath = path;
@@ -175,7 +175,7 @@ var soupExists = function (soupName, successCB, errorCB) {
 
 var querySoup = function (soupName, querySpec, successCB, errorCB) {
     if (querySpec.queryType == "smart") throw new Error("Smart queries can only be run using runSmartQuery");
-	console.log("SmartStore.querySoup: '" + soupName + "' indexPath: " + querySpec.indexPath);
+    console.log("SmartStore.querySoup: '" + soupName + "' indexPath: " + querySpec.indexPath);
     exec(SALESFORCE_MOBILE_SDK_VERSION, successCB, errorCB, SERVICE,
          "pgQuerySoup",
          [{"soupName": soupName, "querySpec": querySpec}]
@@ -184,7 +184,7 @@ var querySoup = function (soupName, querySpec, successCB, errorCB) {
 
 var runSmartQuery = function (querySpec, successCB, errorCB) {
     if (querySpec.queryType != "smart") throw new Error("runSmartQuery can only run smart queries");
-	console.log("SmartStore.runSmartQuery: smartSql: " + querySpec.smartSql);
+    console.log("SmartStore.runSmartQuery: smartSql: " + querySpec.smartSql);
     exec(SALESFORCE_MOBILE_SDK_VERSION, successCB, errorCB, SERVICE,
          "pgRunSmartQuery",
          [{"querySpec": querySpec}]

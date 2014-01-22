@@ -46,7 +46,7 @@ var deviceIsOnline = function() {
         return (connType != null && connType != Connection.NONE && connType != Connection.UNKNOWN);
     } else {
         // Default to browser facility.
-	    return navigator.onLine;
+        return navigator.onLine;
     }
 };
 
