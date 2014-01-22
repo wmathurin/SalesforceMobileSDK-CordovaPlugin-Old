@@ -16,6 +16,8 @@ else
     echo "Copying icu461.zip out of bower_coponents"
     mkdir -p android/assets
     cp bower_components/mobilesdk-android/external/sqlcipher/assets/icudt46l.zip android/assets/
+    echo "Copying sqlcipher libs out of bower_components"
+    cp -r bower_components/mobilesdk-android/external/sqlcipher/libs/* android/hybrid/SmartStore/libs/    
     echo "Copying cordova.force.js out of bower_coponents"
     mkdir -p shared/libs
     cp -r bower_components/mobilesdk-shared/libs/cordova.force.js shared/libs/
