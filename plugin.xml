@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="com.salesforce"
+        version="2.2.0">
+
+  <name>SalesforceMobileSDK Plugins</name>
+  <description>SalesforceMobileSDK Plugins</description>
+  <license>Apache 2.0</license>
+  <keywords>salesforce,oauth,smartstore</keywords>
+  <repo>https://github.com/wmathurin/SalesforceMobileSDK-CordovaPlugin</repo>
+
+  <js-module src="www/com.salesforce.plugin.oauth.js" name="plugin.oauth"></js-module>
+  <js-module src="www/com.salesforce.plugin.sdkinfo.js" name="plugin.sdkinfo"></js-module>
+  <js-module src="www/com.salesforce.plugin.smartstore.js" name="plugin.smartstore">
+    <clobbers target="navigator.smartstore" />
+  </js-module>
+  <js-module src="www/com.salesforce.util.bootstrap.js" name="util.bootstrap"></js-module>
+  <js-module src="www/com.salesforce.util.event.js" name="util.event"></js-module>
+  <js-module src="www/com.salesforce.util.exec.js" name="util.exec"></js-module>
+  <js-module src="www/com.salesforce.util.logger.js" name="util.logger"></js-module>
+
+  <!-- android -->
+  <platform name="android">
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+      <application android:debuggable="true" android:hardwareAccelerated="true" android:icon="@drawable/icon" android:label="@string/app_name" 
+                   android:name="com.salesforce.androidsdk.app.HybridApp"
+                   android:manageSpaceActivity="com.salesforce.androidsdk.ui.ManageSpaceActivity">
+        <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale" android:label="@string/app_name" android:name="com.salesforce.androidsdk.ui.sfhybrid.SalesforceDroidGapActivity" android:theme="@android:style/Theme.Black.NoTitleBar">
+          <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+          </intent-filter>
+        </activity>
+      </application>
+    </config-file>
+
+    <config-file target="res/xml/config.xml" parent="/*">
+      <access origin="http://127.0.0.1*"/> <!-- allow local pages -->
+      <access origin="https://*.force.com" />
+      <access origin="https://*.salesforce.com" />
+      <feature name="com.salesforce.oauth"><param name="android-package" value="com.salesforce.androidsdk.phonegap.SalesforceOAuthPlugin"/></feature>
+      <feature name="com.salesforce.sdkinfo"><param name="android-package" value="com.salesforce.androidsdk.phonegap.SDKInfoPlugin"/></feature>
+      <feature name="com.salesforce.smartstore"><param name="android-package" value="com.salesforce.androidsdk.smartstore.phonegap.SmartStorePlugin"/></feature>
+    </config-file>
+
+    <config-file target="res/values/strings.xml" parent="/resources">
+      <string name="app_package">$PACKAGE_NAME.login</string>
+    </config-file>
+
+    <source-file src="android/assets/icudt46l.zip" target-dir="assets/" />
+  </platform>
+
+</plugin>
