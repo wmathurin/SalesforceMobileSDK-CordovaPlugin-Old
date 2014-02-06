@@ -31,9 +31,9 @@ var fixFile = function(path, fix) {
     });
 };
 
-// Function to removes classpathentry for cordova.jar
-var fixClassPath = function(data) {
-    return data.replace(/\t<classpathentry.*cordova.*\n/, '').split(/\n/)
+// Function to removes current cordova library project reference 
+var fixSDKProjectProperties = function(data) {
+    return data.replace(/android\.library\.reference.*cordova\/framework\n/, '');
 };
 
 // Function to fix AndroidManifest.xml
@@ -69,8 +69,8 @@ fixFile('platforms/android/AndroidManifest.xml', fixAndroidManifest);
 console.log('Fixing application project.properties');
 fixFile('platforms/android/project.properties', fixProjectProperties);
 
-console.log('Removing cordova.jar reference from SalesforceSDK\'s .classpath');
-fixFile('plugins/com.salesforce/android/native/SalesforceSDK/.classpath', fixClassPath);
+console.log('Removing cordova library project reference from SalesforceSDK\'s project.properties');
+fixFile('plugins/com.salesforce/android/native/SalesforceSDK/project.properties', fixSDKProjectProperties);
 
 console.log('Updating application to use ' + (useSmartStore ? 'SmartStore' : ' SalesforceSDK') + ' library project ');
 exec('cd platforms/android/; android update project -p . -t "android-' + targetAndroidApi + '" -l ' + libProject);
