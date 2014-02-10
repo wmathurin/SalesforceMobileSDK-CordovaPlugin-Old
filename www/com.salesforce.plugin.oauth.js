@@ -114,7 +114,7 @@ var forcetkRefresh = function (forcetkClient, success, fail) {
         forcetkClient.setSessionToken(oauthResponseData.accessToken, null, oauthResponseData.instanceUrl);
         success();
     },
-    error);
+    fail);
 };
 
 /**
