@@ -2,7 +2,7 @@
   "name": "salesforcemobilesdk-cordovaplugin",
   "version": "2.2.0",
   "dependencies": {
-    "mobilesdk-shared": "wmathurin/SalesforceMobileSDK-Shared#cordova33",
-    "mobilesdk-android": "wmathurin/SalesforceMobileSDK-Android#cordova33"
+    "mobilesdk-shared": "wmathurin/SalesforceMobileSDK-Shared#cordova34",
+    "mobilesdk-android": "wmathurin/SalesforceMobileSDK-Android#cordova34"
   }
 }
