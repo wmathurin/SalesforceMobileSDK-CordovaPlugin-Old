@@ -3,7 +3,7 @@
 //--------------------------------------
 if (process.argv.length < 4) {
     console.log('Error missing arguments\n' + 
-                'Usage: node postinstall.js  <targetAndroidApi> <useSmartStore>\n' + 
+                'Usage: node postinstall-android.js  <targetAndroidApi> <useSmartStore>\n' + 
                 '*  targetAndroidApi: android api (e.g. 19 for KitKat etc)\n' + 
                 '*  useSmartStore: true | false\n');
     process.exit(1);

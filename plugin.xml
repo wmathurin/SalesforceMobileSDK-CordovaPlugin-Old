@@ -21,6 +21,60 @@
   <js-module src="www/com.salesforce.util.exec.js" name="util.exec"></js-module>
   <js-module src="www/com.salesforce.util.logger.js" name="util.logger"></js-module>
 
+  <!-- ios -->
+  <platform name="ios">
+    <config-file target="res/xml/config.xml" parent="/*">
+      <access origin="http://127.0.0.1*"/> <!-- allow local pages -->
+      <access origin="https://*.force.com" />
+      <access origin="https://*.salesforce.com" />
+      <feature name="org.apache.cordova.network-information"><param name="ios-package" value="CDVConnection"/></feature>
+      <feature name="com.salesforce.oauth"><param name="ios-package" value="SalesforceOAuthPlugin"/></feature>
+      <feature name="com.salesforce.sdkinfo"><param name="ios-package" value="SFSDKInfoPlugin"/></feature>
+      <feature name="com.salesforce.smartstore"><param name="ios-package" value="SFSmartStorePlugin"/></feature>
+    </config-file>
+
+    <!-- Header files -->
+    <header-file src="ios/Dependencies/SalesforceHybridSDK/Headers/SalesforceHybridSDK/SFHybridViewConfig.h" target-dir="SalesforceHybridSDK" />
+    <header-file src="ios/Dependencies/SalesforceHybridSDK/Headers/SalesforceHybridSDK/SFHybridViewController.h" target-dir="SalesforceHybridSDK" />
+    <header-file src="ios/Dependencies/SalesforceOAuth/Headers/SalesforceOAuth/SFOAuthCoordinator.h" target-dir="SalesforceOAuth" />
+    <header-file src="ios/Dependencies/SalesforceOAuth/Headers/SalesforceOAuth/SFOAuthCredentials.h" target-dir="SalesforceOAuth" />
+    <header-file src="ios/Dependencies/SalesforceOAuth/Headers/SalesforceOAuth/SFOAuthInfo.h" target-dir="SalesforceOAuth" />
+    <header-file src="ios/Dependencies/SalesforceSDKCore/Headers/SalesforceSDKCore/SFAuthenticationManager.h" target-dir="SalesforceSDKCore" />
+    <header-file src="ios/Dependencies/SalesforceSDKCore/Headers/SalesforceSDKCore/SFIdentityCoordinator.h" target-dir="SalesforceSDKCore" />
+    <header-file src="ios/Dependencies/SalesforceSDKCore/Headers/SalesforceSDKCore/SFPushNotificationManager.h" target-dir="SalesforceSDKCore" />
+    <header-file src="ios/Dependencies/SalesforceCommonUtils/Headers/SalesforceCommonUtils/SFLogger.h" target-dir="SalesforceCommonUtils" />
+
+    <!-- Libraries -->
+    <source-file src="ios/Dependencies/Cordova/libCordova.a" framework="true" />
+    <source-file src="ios/Dependencies/SalesforceCommonUtils/libSalesforceCommonUtils.a" framework="true" />
+    <source-file src="ios/Dependencies/SalesforceHybridSDK/libSalesforceHybridSDK.a" framework="true" />
+    <source-file src="ios/Dependencies/SalesforceOAuth/libSalesforceOAuth.a" framework="true" />
+    <source-file src="ios/Dependencies/SalesforceSDKCore/libSalesforceSDKCore.a" framework="true" />
+    <source-file src="ios/Dependencies/openssl/libcrypto.a" framework="true" />
+    <source-file src="ios/Dependencies/openssl/libssl.a" framework="true" />
+    <source-file src="ios/Dependencies/sqlcipher/libsqlcipher.a" framework="true" />
+
+    <!-- System frameworks -->
+    <framework src="libxml2.dylib" />
+    <framework src="libz.dylib" />
+    <framework src="AddressBook.framework" weak="true" />
+    <framework src="AddressBookUI.framework" weak="true" />
+    <framework src="CoreGraphics.framework" weak="true" />
+    <framework src="CoreLocation.framework" weak="true" />
+    <framework src="Foundation.framework" weak="true" />
+    <framework src="MessageUI.framework" weak="true" />
+    <framework src="MobileCoreServices.framework" weak="true" />
+    <framework src="QuartzCore.framework" weak="true" />
+    <framework src="Security.framework" weak="true" />
+    <framework src="SystemConfiguration.framework" weak="true" />
+    <framework src="UIKit.framework" weak="true" />
+    <framework src="AssetsLibrary.framework" weak="true" />
+
+    <info>
+      You need to run: node node plugins/com.salesforce/tools/postinstall-ios.js
+    </info>
+  </platform>
+
   <!-- android -->
   <platform name="android">
     <config-file target="AndroidManifest.xml" parent="/manifest">
@@ -50,6 +104,12 @@
     </config-file>
 
     <source-file src="android/assets/icudt46l.zip" target-dir="assets/" />
+
+    <info>
+      You need to run: node node plugins/com.salesforce/tools/postinstall-android.js {target-api (e.g. 19 for KitKat)} {use-smartstore (true or false)}
+    </info>
+
   </platform>
+
 
 </plugin>
