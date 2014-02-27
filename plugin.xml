@@ -45,7 +45,6 @@
     <header-file src="ios/Dependencies/SalesforceCommonUtils/Headers/SalesforceCommonUtils/SFLogger.h" target-dir="SalesforceCommonUtils" />
 
     <!-- Libraries -->
-    <source-file src="ios/Dependencies/Cordova/libCordova.a" framework="true" />
     <source-file src="ios/Dependencies/SalesforceCommonUtils/libSalesforceCommonUtils.a" framework="true" />
     <source-file src="ios/Dependencies/SalesforceHybridSDK/libSalesforceHybridSDK.a" framework="true" />
     <source-file src="ios/Dependencies/SalesforceOAuth/libSalesforceOAuth.a" framework="true" />

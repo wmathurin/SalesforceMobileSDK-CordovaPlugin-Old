@@ -20,9 +20,7 @@ else
     echo "Copying sqlcipher libs out of bower_components"
     cp -r bower_components/mobilesdk-android/external/sqlcipher/libs/* android/hybrid/SmartStore/libs/    
     echo "*** iOS ***"
-    echo "Copying cordova library out of bower_components"    
     mkdir -p ios/Dependencies
-    unzip bower_components/mobilesdk-ios-distribution/Cordova/Cordova-Debug.zip -d ios/Dependencies
     echo "Copying SalesforceHybridSDK library out of bower_components"    
     unzip bower_components/mobilesdk-ios-distribution/SalesforceHybridSDK-Debug.zip -d ios/Dependencies
     echo "Copying SalesforceOAuth library out of bower_components"    

@@ -3,7 +3,7 @@
 //--------------------------------------
 if (process.argv.length < 3) {
     console.log('Error missing arguments\n' + 
-                'Usage: node postinstall-ios.js  <AppName>\n'); // XXX we could figure out the AppName
+                'Usage: node postinstall-ios.js  <appName>\n'); // XXX we could figure out the AppName
     process.exit(1);
 }
 var appName = process.argv[2];
@@ -22,5 +22,5 @@ var copyFile = function(srcPath, targetPath) {
 // Doing actual post installation work
 //--------------------------------------
 console.log('Copying AppDelegate');
-copyFile('plugins/com.salesforce/ios/Template/Classes/AppDelegate.h', 'platforms/ios/' + AppName + 'Classes/');
-copyFile('plugins/com.salesforce/ios/Template/Classes/AppDelegate.m', 'platforms/ios/' + AppName + 'Classes/');
+copyFile('plugins/com.salesforce/ios/Template/Classes/AppDelegate.h', 'platforms/ios/' + appName + '/Classes/AppDelegate.h');
+copyFile('plugins/com.salesforce/ios/Template/Classes/AppDelegate.m', 'platforms/ios/' + appName + '/Classes/AppDelegate.m');
