@@ -70,7 +70,7 @@
     <framework src="AssetsLibrary.framework" weak="true" />
 
     <info>
-      You need to run: node node plugins/com.salesforce/tools/postinstall-ios.js
+      You need to run: node plugins/com.salesforce/tools/postinstall-ios.js
     </info>
   </platform>
 
@@ -105,7 +105,7 @@
     <source-file src="android/assets/icudt46l.zip" target-dir="assets/" />
 
     <info>
-      You need to run: node node plugins/com.salesforce/tools/postinstall-android.js {target-api (e.g. 19 for KitKat)} {use-smartstore (true or false)}
+      You need to run: node plugins/com.salesforce/tools/postinstall-android.js {target-api (e.g. 19 for KitKat)} {use-smartstore (true or false)}
     </info>
 
   </platform>

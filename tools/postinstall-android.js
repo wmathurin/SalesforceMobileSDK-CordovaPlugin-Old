@@ -16,6 +16,7 @@ var useSmartStore = process.argv[3] == 'true';
 //--------------------------------------
 var fs = require('fs');
 var exec = require('child_process').exec;
+var path = require('path');
 
 var copyFile = function(srcPath, targetPath) {
     fs.createReadStream(srcPath).pipe(fs.createWriteStream(targetPath));
@@ -73,12 +74,12 @@ console.log('Removing cordova library project reference from SalesforceSDK\'s pr
 fixFile('plugins/com.salesforce/android/native/SalesforceSDK/project.properties', fixSDKProjectProperties);
 
 console.log('Updating application to use ' + (useSmartStore ? 'SmartStore' : ' SalesforceSDK') + ' library project ');
-exec('cd platforms/android/; android update project -p . -t "android-' + targetAndroidApi + '" -l ' + libProject);
+exec('android update project -p . -t "android-' + targetAndroidApi + '" -l ' + libProject, {cwd: path.resolve(process.cwd(), 'platforms/android')});
 
 console.log('Updating SalesforceSDK to use cordovaLib');
-exec('cd plugins/com.salesforce/android/native/SalesforceSDK; android update project -p . -t "android-' + targetAndroidApi + '" -l ' + cordovaLibProject);
+exec('android update project -p . -t "android-' + targetAndroidApi + '" -l ' + cordovaLibProject, {cwd: path.resolve(process.cwd(), 'plugins/com.salesforce/android/native/SalesforceSDK')});
 
 if (useSmartStore) {
     console.log('Updating SmartStore library target android api');
-    exec('cd plugins/com.salesforce/android/hybrid/SmartStore; android update project -p . -t "android-' + targetAndroidApi + '"');
+    exec('android update project -p . -t "android-' + targetAndroidApi + '"', {cwd: path.resolve(process.cwd(), 'plugins/com.salesforce/android/hybrid/SmartStore')});
 }
