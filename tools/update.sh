@@ -1,6 +1,7 @@
 #!/bin/bash
 
 
+
 if [ ! -d "tools" ]
 then
     echo "You must run this tool from the root directory of your repo clone"
@@ -20,19 +21,49 @@ else
     echo "Copying sqlcipher libs out of bower_components"
     cp -r bower_components/mobilesdk-android/external/sqlcipher/libs/* android/hybrid/SmartStore/libs/    
     echo "*** iOS ***"
-    mkdir -p ios/Dependencies
+    mkdir -p tmp
     echo "Copying SalesforceHybridSDK library out of bower_components"    
-    unzip bower_components/mobilesdk-ios-distribution/SalesforceHybridSDK-Debug.zip -d ios/Dependencies
+    unzip bower_components/mobilesdk-ios-distribution/SalesforceHybridSDK-Debug.zip -d tmp
     echo "Copying SalesforceOAuth library out of bower_components"    
-    unzip bower_components/mobilesdk-ios-distribution/SalesforceOAuth-Debug.zip -d ios/Dependencies
+    unzip bower_components/mobilesdk-ios-distribution/SalesforceOAuth-Debug.zip -d tmp
     echo "Copying SalesforceCore library out of bower_components"    
-    unzip bower_components/mobilesdk-ios-distribution/SalesforceSDKCore-Debug.zip -d ios/Dependencies
+    unzip bower_components/mobilesdk-ios-distribution/SalesforceSDKCore-Debug.zip -d tmp
     echo "Copying SalesforceCommonUtils library out of bower_components"    
-    cp -r bower_components/mobilesdk-ios-dependencies/SalesforceCommonUtils  ios/Dependencies
+    cp -r bower_components/mobilesdk-ios-dependencies/SalesforceCommonUtils  tmp
     echo "Copying openssl library out of bower_components"    
-    cp -r bower_components/mobilesdk-ios-dependencies/openssl  ios/Dependencies
+    cp -r bower_components/mobilesdk-ios-dependencies/openssl  tmp
     echo "Copying sqlcipher library out of bower_components"    
-    cp -r bower_components/mobilesdk-ios-dependencies/sqlcipher  ios/Dependencies
+    cp -r bower_components/mobilesdk-ios-dependencies/sqlcipher  tmp
+    echo "Copying needed headers to ios/headers"
+    mkdir -p ios/headers
+    copy_and_fix_header ()
+    {
+        echo "* Fixing and copying $1"
+        find tmp -name $1 | xargs sed 's/\#import\ \<Salesforce.*\/\(.*\)\>/#import "\1"/' > ios/headers/$1
+    }
+    copy_and_fix_header SFHybridViewConfig.h
+    copy_and_fix_header SFHybridViewController.h
+    copy_and_fix_header SFOAuthCoordinator.h
+    copy_and_fix_header SFOAuthCredentials.h
+    copy_and_fix_header SFOAuthInfo.h
+    copy_and_fix_header SFAuthenticationManager.h
+    copy_and_fix_header SFIdentityCoordinator.h
+    copy_and_fix_header SFPushNotificationManager.h
+    copy_and_fix_header SFLogger.h
+    echo "Copying needed libraries to ios/frameworks"
+    mkdir -p ios/frameworks
+    copy_lib ()
+    {
+        echo "* Copying $1"
+        find tmp -name $1 -exec cp {} ios/frameworks/ \;
+    }
+    copy_lib libSalesforceCommonUtils.a
+    copy_lib libSalesforceHybridSDK.a
+    copy_lib libSalesforceOAuth.a
+    copy_lib libSalesforceSDKCore.a
+    copy_lib libcrypto.a
+    copy_lib libssl.a
+    copy_lib libsqlcipher.a
     echo "Copying template out of bower_components"
     mkdir -p ios/Template
     cp -r bower_components/mobilesdk-ios-package/Templates/HybridAppTemplate/__HybridTemplateAppName__/__HybridTemplateAppName__/ ios/Template

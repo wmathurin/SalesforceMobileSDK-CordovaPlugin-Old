@@ -34,24 +34,24 @@
     </config-file>
 
     <!-- Header files -->
-    <header-file src="ios/Dependencies/SalesforceHybridSDK/Headers/SalesforceHybridSDK/SFHybridViewConfig.h" target-dir="SalesforceHybridSDK" />
-    <header-file src="ios/Dependencies/SalesforceHybridSDK/Headers/SalesforceHybridSDK/SFHybridViewController.h" target-dir="SalesforceHybridSDK" />
-    <header-file src="ios/Dependencies/SalesforceOAuth/Headers/SalesforceOAuth/SFOAuthCoordinator.h" target-dir="SalesforceOAuth" />
-    <header-file src="ios/Dependencies/SalesforceOAuth/Headers/SalesforceOAuth/SFOAuthCredentials.h" target-dir="SalesforceOAuth" />
-    <header-file src="ios/Dependencies/SalesforceOAuth/Headers/SalesforceOAuth/SFOAuthInfo.h" target-dir="SalesforceOAuth" />
-    <header-file src="ios/Dependencies/SalesforceSDKCore/Headers/SalesforceSDKCore/SFAuthenticationManager.h" target-dir="SalesforceSDKCore" />
-    <header-file src="ios/Dependencies/SalesforceSDKCore/Headers/SalesforceSDKCore/SFIdentityCoordinator.h" target-dir="SalesforceSDKCore" />
-    <header-file src="ios/Dependencies/SalesforceSDKCore/Headers/SalesforceSDKCore/SFPushNotificationManager.h" target-dir="SalesforceSDKCore" />
-    <header-file src="ios/Dependencies/SalesforceCommonUtils/Headers/SalesforceCommonUtils/SFLogger.h" target-dir="SalesforceCommonUtils" />
+    <header-file src="ios/headers/SFHybridViewConfig.h" />
+    <header-file src="ios/headers/SFHybridViewController.h" />
+    <header-file src="ios/headers/SFOAuthCoordinator.h" />
+    <header-file src="ios/headers/SFOAuthCredentials.h"  />
+    <header-file src="ios/headers/SFOAuthInfo.h" />
+    <header-file src="ios/headers/SFAuthenticationManager.h" />
+    <header-file src="ios/headers/SFIdentityCoordinator.h" />
+    <header-file src="ios/headers/SFPushNotificationManager.h" />
+    <header-file src="ios/headers/SFLogger.h" />
 
     <!-- Libraries -->
-    <source-file src="ios/Dependencies/SalesforceCommonUtils/libSalesforceCommonUtils.a" framework="true" />
-    <source-file src="ios/Dependencies/SalesforceHybridSDK/libSalesforceHybridSDK.a" framework="true" />
-    <source-file src="ios/Dependencies/SalesforceOAuth/libSalesforceOAuth.a" framework="true" />
-    <source-file src="ios/Dependencies/SalesforceSDKCore/libSalesforceSDKCore.a" framework="true" />
-    <source-file src="ios/Dependencies/openssl/libcrypto.a" framework="true" />
-    <source-file src="ios/Dependencies/openssl/libssl.a" framework="true" />
-    <source-file src="ios/Dependencies/sqlcipher/libsqlcipher.a" framework="true" />
+    <source-file src="ios/frameworks/libSalesforceCommonUtils.a" framework="true" />
+    <source-file src="ios/frameworks/libSalesforceHybridSDK.a" framework="true" />
+    <source-file src="ios/frameworks/libSalesforceOAuth.a" framework="true" />
+    <source-file src="ios/frameworks/libSalesforceSDKCore.a" framework="true" />
+    <source-file src="ios/frameworks/libcrypto.a" framework="true" />
+    <source-file src="ios/frameworks/libssl.a" framework="true" />
+    <source-file src="ios/frameworks/libsqlcipher.a" framework="true" />
 
     <!-- System frameworks -->
     <framework src="libxml2.dylib" />

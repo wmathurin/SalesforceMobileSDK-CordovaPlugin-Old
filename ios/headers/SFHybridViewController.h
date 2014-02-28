@@ -25,8 +25,8 @@
 
 #import <Foundation/Foundation.h>
 #import <Cordova/CDVViewController.h>
-#import <SalesforceSDKCore/SFAuthenticationManager.h>
-#import <SalesforceOAuth/SFOAuthInfo.h>
+#import "SFAuthenticationManager.h"
+#import "SFOAuthInfo.h"
 #import "SFHybridViewConfig.h"
 
 /**
