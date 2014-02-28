@@ -64,9 +64,12 @@ else
     copy_lib libcrypto.a
     copy_lib libssl.a
     copy_lib libsqlcipher.a
-    echo "Copying template out of bower_components"
-    mkdir -p ios/Template
-    cp -r bower_components/mobilesdk-ios-package/Templates/HybridAppTemplate/__HybridTemplateAppName__/__HybridTemplateAppName__/ ios/Template
+    echo "Copying AppDelegate.h/.m out of bower_components"
+    mkdir -p ios/Classes
+    cp -r bower_components/mobilesdk-ios-package/Templates/HybridAppTemplate/__HybridTemplateAppName__/__HybridTemplateAppName__/Classes/AppDelegate.* ios/Classes/
+    echo "Copying Settings.bundle out of bower_components"
+    mkdir -p ios/resources
+    cp -r bower_components/mobilesdk-ios-package/Templates/HybridAppTemplate/__HybridTemplateAppName__/__HybridTemplateAppName__/Settings.bundle ios/resources/
     echo "*** Shared ***"
     echo "Copying cordova.force.js out of bower_coponents"
     mkdir -p shared/libs
