@@ -1,6 +1,13 @@
 #!/bin/bash
 
-
+if [[ "clean" == "$1" ]]
+then
+    echo "*** Cleanup ***"
+    echo "Removing bower_components"
+    rm -rf bower_components
+    echo "Removing tmp"
+    rm -rf tmp
+fi
 
 if [ ! -d "tools" ]
 then
@@ -9,13 +16,13 @@ else
     echo "Fetching latest ios, android and shared repos"
     bower install
     echo "*** Android ***"
-    echo "Copying SalesforceSDK library out of bower_coponents"
+    echo "Copying SalesforceSDK library out of bower_components"
     mkdir -p android/native
     cp -r bower_components/mobilesdk-android/native/SalesforceSDK android/native/
-    echo "Copying SmartStore library out of bower_coponents"
+    echo "Copying SmartStore library out of bower_components"
     mkdir -p android/hybrid
     cp -r bower_components/mobilesdk-android/hybrid/SmartStore android/hybrid/
-    echo "Copying icu461.zip out of bower_coponents"
+    echo "Copying icu461.zip out of bower_components"
     mkdir -p android/assets
     cp bower_components/mobilesdk-android/external/sqlcipher/assets/icudt46l.zip android/assets/
     echo "Copying sqlcipher libs out of bower_components"
@@ -71,7 +78,7 @@ else
     mkdir -p ios/resources
     cp -r bower_components/mobilesdk-ios-package/Templates/HybridAppTemplate/__HybridTemplateAppName__/__HybridTemplateAppName__/Settings.bundle ios/resources/
     echo "*** Shared ***"
-    echo "Copying cordova.force.js out of bower_coponents"
+    echo "Copying cordova.force.js out of bower_components"
     mkdir -p shared/libs
     cp -r bower_components/mobilesdk-shared/libs/cordova.force.js shared/libs/
     node tools/split.js
