@@ -34,27 +34,28 @@
     </config-file>
 
     <!-- Header files -->
-    <header-file src="ios/headers/SFHybridViewConfig.h" target-dir="salesforce" />
-    <header-file src="ios/headers/SFHybridViewController.h" target-dir="salesforce" />
-    <header-file src="ios/headers/SFOAuthCoordinator.h" target-dir="salesforce" />
-    <header-file src="ios/headers/SFOAuthCredentials.h" target-dir="salesforce" />
-    <header-file src="ios/headers/SFOAuthInfo.h" target-dir="salesforce" />
-    <header-file src="ios/headers/SFAuthenticationManager.h" target-dir="salesforce"/>
-    <header-file src="ios/headers/SFIdentityCoordinator.h" target-dir="salesforce" />
-    <header-file src="ios/headers/SFPushNotificationManager.h" target-dir="salesforce" />
-    <header-file src="ios/headers/SFLogger.h" />
+    <header-file src="src/ios/headers/SFHybridViewConfig.h" target-dir="salesforce" />
+    <header-file src="src/ios/headers/SFHybridViewController.h" target-dir="salesforce" />
+    <header-file src="src/ios/headers/SFOAuthCoordinator.h" target-dir="salesforce" />
+    <header-file src="src/ios/headers/SFOAuthCredentials.h" target-dir="salesforce" />
+    <header-file src="src/ios/headers/SFOAuthInfo.h" target-dir="salesforce" />
+    <header-file src="src/ios/headers/SFAuthenticationManager.h" target-dir="salesforce"/>
+    <header-file src="src/ios/headers/SFIdentityCoordinator.h" target-dir="salesforce" />
+    <header-file src="src/ios/headers/SFPushNotificationManager.h" target-dir="salesforce" />
+    <header-file src="src/ios/headers/SFLogger.h" />
 
     <!-- Resource bundles -->
-    <resource-file src="ios/resources/Settings.bundle" />
+    <resource-file src="src/ios/resources/Settings.bundle" />
+    <resource-file src="src/ios/resources/SalesforceSDKResources.bundle" />
 
     <!-- Libraries -->
-    <source-file src="ios/frameworks/libSalesforceCommonUtils.a" framework="true" />
-    <source-file src="ios/frameworks/libSalesforceHybridSDK.a" framework="true" />
-    <source-file src="ios/frameworks/libSalesforceOAuth.a" framework="true" />
-    <source-file src="ios/frameworks/libSalesforceSDKCore.a" framework="true" />
-    <source-file src="ios/frameworks/libcrypto.a" framework="true" />
-    <source-file src="ios/frameworks/libssl.a" framework="true" />
-    <source-file src="ios/frameworks/libsqlcipher.a" framework="true" />
+    <source-file src="src/ios/frameworks/libSalesforceCommonUtils.a" framework="true" />
+    <source-file src="src/ios/frameworks/libSalesforceHybridSDK.a" framework="true" />
+    <source-file src="src/ios/frameworks/libSalesforceOAuth.a" framework="true" />
+    <source-file src="src/ios/frameworks/libSalesforceSDKCore.a" framework="true" />
+    <source-file src="src/ios/frameworks/libcrypto.a" framework="true" />
+    <source-file src="src/ios/frameworks/libssl.a" framework="true" />
+    <source-file src="src/ios/frameworks/libsqlcipher.a" framework="true" />
 
     <!-- System frameworks -->
     <framework src="libxml2.dylib" />
@@ -105,7 +106,7 @@
       <string name="app_package">$PACKAGE_NAME.login</string>
     </config-file>
 
-    <source-file src="android/assets/icudt46l.zip" target-dir="assets/" />
+    <source-file src="src/android/assets/icudt46l.zip" target-dir="assets/" />
 
     <info>
       You need to run: node plugins/com.salesforce/tools/postinstall-android.js {target-api (e.g. 19 for KitKat)} {use-smartstore (true or false)}

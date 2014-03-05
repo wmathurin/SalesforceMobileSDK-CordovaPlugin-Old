@@ -1,34 +1,40 @@
 #!/bin/bash
 
-if [[ "clean" == "$1" ]]
-then
-    echo "*** Cleanup ***"
-    echo "Removing bower_components"
-    rm -rf bower_components
-    echo "Removing tmp"
-    rm -rf tmp
-fi
-
 if [ ! -d "tools" ]
 then
     echo "You must run this tool from the root directory of your repo clone"
 else
-    echo "Fetching latest ios, android and shared repos"
+    echo "*** Fetching latest ios, android and shared repos ***"
     bower install
+
+    echo "*** Creating directories ***"
+    echo "Creating tmp directory"
+    mkdir -p tmp
+    echo "Creating android directories"
+    mkdir -p src/android/native
+    mkdir -p src/android/hybrid
+    mkdir -p src/android/assets
+    echo "Creating ios directories"
+    mkdir -p src/ios/headers
+    mkdir -p src/ios/frameworks
+    mkdir -p src/ios/classes
+    mkdir -p src/ios/resources
+
     echo "*** Android ***"
     echo "Copying SalesforceSDK library out of bower_components"
-    mkdir -p android/native
-    cp -r bower_components/mobilesdk-android/native/SalesforceSDK android/native/
+    cp -r bower_components/mobilesdk-android/native/SalesforceSDK src/android/native/
+    echo "Fixing SalesforceSDK\'s project.properties"
+    cat src/android/native/SalesforceSDK/project.properties | grep -v 'cordova/framework' > tmp/project.properties
+    echo 'android.library.reference.1=../../../../../platforms/android/CordovaLib' >> tmp/project.properties
+    mv tmp/project.properties src/android/native/SalesforceSDK/project.properties
     echo "Copying SmartStore library out of bower_components"
-    mkdir -p android/hybrid
-    cp -r bower_components/mobilesdk-android/hybrid/SmartStore android/hybrid/
+    cp -r bower_components/mobilesdk-android/hybrid/SmartStore src/android/hybrid/
     echo "Copying icu461.zip out of bower_components"
-    mkdir -p android/assets
-    cp bower_components/mobilesdk-android/external/sqlcipher/assets/icudt46l.zip android/assets/
+    cp bower_components/mobilesdk-android/external/sqlcipher/assets/icudt46l.zip src/android/assets/
     echo "Copying sqlcipher libs out of bower_components"
-    cp -r bower_components/mobilesdk-android/external/sqlcipher/libs/* android/hybrid/SmartStore/libs/    
+    cp -r bower_components/mobilesdk-android/external/sqlcipher/libs/* src/android/hybrid/SmartStore/libs/    
+
     echo "*** iOS ***"
-    mkdir -p tmp
     echo "Copying SalesforceHybridSDK library out of bower_components"    
     unzip bower_components/mobilesdk-ios-distribution/SalesforceHybridSDK-Debug.zip -d tmp
     echo "Copying SalesforceOAuth library out of bower_components"    
@@ -41,12 +47,11 @@ else
     cp -r bower_components/mobilesdk-ios-dependencies/openssl  tmp
     echo "Copying sqlcipher library out of bower_components"    
     cp -r bower_components/mobilesdk-ios-dependencies/sqlcipher  tmp
-    echo "Copying needed headers to ios/headers"
-    mkdir -p ios/headers
+    echo "Copying and fixing needed headers to src/ios/headers"
     copy_and_fix_header ()
     {
         echo "* Fixing and copying $1"
-        find tmp -name $1 | xargs sed 's/\#import\ \<Salesforce.*\/\(.*\)\>/#import "\1"/' > ios/headers/$1
+        find tmp -name $1 | xargs sed 's/\#import\ \<Salesforce.*\/\(.*\)\>/#import "\1"/' > src/ios/headers/$1
     }
     copy_and_fix_header SFHybridViewConfig.h
     copy_and_fix_header SFHybridViewController.h
@@ -57,12 +62,11 @@ else
     copy_and_fix_header SFIdentityCoordinator.h
     copy_and_fix_header SFPushNotificationManager.h
     copy_and_fix_header SFLogger.h
-    echo "Copying needed libraries to ios/frameworks"
-    mkdir -p ios/frameworks
+    echo "Copying needed libraries to src/ios/frameworks"
     copy_lib ()
     {
         echo "* Copying $1"
-        find tmp -name $1 -exec cp {} ios/frameworks/ \;
+        find tmp -name $1 -exec cp {} src/ios/frameworks/ \;
     }
     copy_lib libSalesforceCommonUtils.a
     copy_lib libSalesforceHybridSDK.a
@@ -71,15 +75,18 @@ else
     copy_lib libcrypto.a
     copy_lib libssl.a
     copy_lib libsqlcipher.a
-    echo "Copying AppDelegate.h/.m out of bower_components"
-    mkdir -p ios/Classes
-    cp -r bower_components/mobilesdk-ios-package/Templates/HybridAppTemplate/__HybridTemplateAppName__/__HybridTemplateAppName__/Classes/AppDelegate.* ios/Classes/
     echo "Copying Settings.bundle out of bower_components"
-    mkdir -p ios/resources
-    cp -r bower_components/mobilesdk-ios-package/Templates/HybridAppTemplate/__HybridTemplateAppName__/__HybridTemplateAppName__/Settings.bundle ios/resources/
+    cp -r bower_components/mobilesdk-ios-package/Templates/NativeAppTemplate/__NativeTemplateAppName__/__NativeTemplateAppName__/Settings.bundle src/ios/resources/
+    echo "Copying SalesforceSDKResources.bundle out of bower_components"
+    cp -r bower_components/mobilesdk-ios-distribution/SalesforceSDKResources.bundle src/ios/resources/
+
     echo "*** Shared ***"
-    echo "Copying cordova.force.js out of bower_components"
-    mkdir -p shared/libs
-    cp -r bower_components/mobilesdk-shared/libs/cordova.force.js shared/libs/
-    node tools/split.js
+    echo "Copying split cordova.force.js out of bower_components"
+    node tools/split.js bower_components/mobilesdk-shared/libs/cordova.force.js
+
+    echo "*** Cleanup ***"
+    rm -rf bower_components
+    rm -rf tmp
 fi
+
+

@@ -28,5 +28,5 @@ var copyFile = function(srcPath, targetPath) {
 console.log('Extracting appName');
 var appName = extractAppName();
 console.log('Copying AppDelegate');
-copyFile('plugins/com.salesforce/ios/Classes/AppDelegate.h', 'platforms/ios/' + appName + '/Classes/AppDelegate.h');
-copyFile('plugins/com.salesforce/ios/Classes/AppDelegate.m', 'platforms/ios/' + appName + '/Classes/AppDelegate.m');
+copyFile('plugins/com.salesforce/ios/classes/AppDelegate.h', 'platforms/ios/' + appName + '/Classes/AppDelegate.h');
+copyFile('plugins/com.salesforce/ios/classes/AppDelegate.m', 'platforms/ios/' + appName + '/Classes/AppDelegate.m');

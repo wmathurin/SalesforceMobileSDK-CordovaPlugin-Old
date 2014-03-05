@@ -1,6 +1,7 @@
 var fs = require('fs');
 
-fs.readFile('shared/libs/cordova.force.js', 'utf8', function (err, data) { 
+var cordovaForcePath = process.argv[2];
+fs.readFile(cordovaForcePath, 'utf8', function (err, data) { 
     var lines = data.split(/\n/);
 
     var copyrightVersionLines = [];
