@@ -62,7 +62,7 @@ var fixProjectProperties = function(data) {
 // Doing actual post installation work
 //--------------------------------------
 var libProject = useSmartStore ? '../../plugins/com.salesforce/src/android/hybrid/SmartStore' : '../../plugins/com.salesforce/src/android/native/SalesforceSDK';
-var cordovaLibProject = '../../../../../platforms/android/CordovaLib';
+var cordovaLibProject = '../../../../../../platforms/android/CordovaLib';
 
 console.log('Fixing application AndroidManifest.xml');
 fixFile('platforms/android/AndroidManifest.xml', fixAndroidManifest);
