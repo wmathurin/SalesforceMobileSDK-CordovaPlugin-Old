@@ -23,10 +23,6 @@ else
     echo "*** Android ***"
     echo "Copying SalesforceSDK library out of bower_components"
     cp -r bower_components/mobilesdk-android/native/SalesforceSDK src/android/native/
-    echo "Fixing SalesforceSDK\'s project.properties"
-    cat src/android/native/SalesforceSDK/project.properties | grep -v 'cordova/framework' > tmp/project.properties
-    echo 'android.library.reference.1=../../../../../platforms/android/CordovaLib' >> tmp/project.properties
-    mv tmp/project.properties src/android/native/SalesforceSDK/project.properties
     echo "Copying SmartStore library out of bower_components"
     cp -r bower_components/mobilesdk-android/hybrid/SmartStore src/android/hybrid/
     echo "Copying icu461.zip out of bower_components"
