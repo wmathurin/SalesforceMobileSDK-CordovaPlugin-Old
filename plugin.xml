@@ -72,8 +72,6 @@
     <framework src="UIKit.framework" weak="true" />
     <framework src="AssetsLibrary.framework" weak="true" />
 
-    <source-file src="tools/postinstall-ios.js" target-dir="../../hooks/before_build/" />
-
     <info>
       You need to run: node plugins/com.salesforce/tools/postinstall-ios.js
     </info>
