@@ -11,6 +11,8 @@
   <keywords>salesforce,oauth,smartstore</keywords>
   <repo>https://github.com/wmathurin/SalesforceMobileSDK-CordovaPlugin</repo>
 
+  <source-file src="tools/postinstall-ios.js" target-dir="hooks/before_build" />
+
   <js-module src="www/com.salesforce.plugin.oauth.js" name="plugin.oauth"></js-module>
   <js-module src="www/com.salesforce.plugin.sdkinfo.js" name="plugin.sdkinfo"></js-module>
   <js-module src="www/com.salesforce.plugin.smartstore.js" name="plugin.smartstore">
