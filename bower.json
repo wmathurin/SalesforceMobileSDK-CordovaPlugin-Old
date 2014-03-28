@@ -2,10 +2,10 @@
   "name": "salesforcemobilesdk-cordovaplugin",
   "version": "2.2.0",
   "dependencies": {
-    "mobilesdk-shared": "wmathurin/SalesforceMobileSDK-Shared#cordova34",
-    "mobilesdk-android": "wmathurin/SalesforceMobileSDK-Android#cordova34",
-    "mobilesdk-ios-distribution": "wmathurin/SalesforceMobileSDK-iOS-Distribution#cordova34",
-    "mobilesdk-ios-package": "wmathurin/SalesforceMobileSDK-iOS-Package#cordova34",
+    "mobilesdk-shared": "wmathurin/SalesforceMobileSDK-Shared#unstable23",
+    "mobilesdk-android": "wmathurin/SalesforceMobileSDK-Android#unstable23",
+    "mobilesdk-ios-distribution": "wmathurin/SalesforceMobileSDK-iOS-Distribution#unstable23",
+    "mobilesdk-ios-package": "wmathurin/SalesforceMobileSDK-iOS-Package#unstable23",
     "mobilesdk-ios-dependencies": "wmathurin/SalesforceMobileSDK-iOS-Dependencies"
   }
 }
