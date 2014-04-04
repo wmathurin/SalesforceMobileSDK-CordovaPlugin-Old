@@ -1,6 +1,6 @@
 {
   "name": "salesforcemobilesdk-cordovaplugin",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "dependencies": {
     "mobilesdk-shared": "wmathurin/SalesforceMobileSDK-Shared#unstable23",
     "mobilesdk-android": "wmathurin/SalesforceMobileSDK-Android#unstable23",

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-13, salesforce.com, inc.
+ * Copyright (c) 2012-14, salesforce.com, inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided
@@ -25,7 +25,7 @@
  */
 
 // Version this js was shipped with
-var SALESFORCE_MOBILE_SDK_VERSION = "2.2.0.unstable";
+var SALESFORCE_MOBILE_SDK_VERSION = "2.3.0.unstable";
 var SERVICE = "com.salesforce.sfaccountmanager";
 
 var exec = require("com.salesforce.util.exec").exec;
@@ -51,21 +51,21 @@ var UserAccount = function(authToken, refreshToken, loginServer, idUrl, instance
  */
 var logoutInitiated = false;
 
-
-Obtains the list of user accounts already logged in.
+/**
+ * Obtains the list of user accounts already logged in.
  *   success - The success callback function to use.
  *   fail    - The failure/error callback function to use.
-cordova returns an array, each entry contains a dictionary with:
-    authToken
-    refreshToken
- * 	   loginServer
-    idUrl
-    instanceServer
+ * cordova returns an array, each entry contains a dictionary with:
+ *     authToken
+ *     refreshToken
+ *     loginServer
+ *     idUrl
+ *     instanceServer
  *     orgId
-    userId
-    username
-    clientId
-
+ *     userId
+ *     username
+ *     clientId
+ */
 var getUsers = function (success, fail) {
     exec(SALESFORCE_MOBILE_SDK_VERSION, success, fail, SERVICE, "getUsers", []);
 };
@@ -75,15 +75,15 @@ var getUsers = function (success, fail) {
  *   success         - The success callback function to use.
  *   fail            - The failure/error callback function to use.
  * cordova returns a dictionary with:
-    authToken
-    refreshToken
- * 	   loginServer
-    idUrl
-    instanceServer
+ *     authToken
+ *     refreshToken
+ *     loginServer
+ *     idUrl
+ *     instanceServer
  *     orgId
-    userId
-    username
-    clientId
+ *     userId
+ *     username
+ *     clientId
  */
 var getCurrentUser = function (success, fail) {
     exec(SALESFORCE_MOBILE_SDK_VERSION, success, fail, SERVICE, "getCurrentUser", []);
@@ -114,7 +114,7 @@ var logout = function (user) {
  * will be switched to another user, or a new user.
  */
 var switchToUser = function (user) {
-    exec(SALESFORCE_MOBILE_SDK_VERSION, null, null, SERVICE, "switchToUser", [user]);
+    exec(SALESFORCE_MOBILE_SDK_VERSION, null, null, SERVICE, "switchToUser", (user ? [user] : []));
 };
 
 /**
@@ -122,8 +122,8 @@ var switchToUser = function (user) {
  */
 module.exports = {
     UserAccount: UserAccount,
-	getUsers: getUsers,
-	getCurrentUser: getCurrentUser,
+    getUsers: getUsers,
+    getCurrentUser: getCurrentUser,
     logout: logout,
     switchToUser: switchToUser
 };

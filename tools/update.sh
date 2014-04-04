@@ -5,7 +5,7 @@ then
     echo "You must run this tool from the root directory of your repo clone"
 else
     echo "*** Fetching latest ios, android and shared repos ***"
-    bower install
+    bower install ./tools
 
     echo "*** Creating directories ***"
     echo "Creating tmp directory"
@@ -78,7 +78,7 @@ else
 
     echo "*** Shared ***"
     echo "Copying split cordova.force.js out of bower_components"
-    node tools/split.js bower_components/mobilesdk-shared/libs/cordova.force.js
+    cp bower_components/mobilesdk-shared/gen/plugins/com.salesforce/*.js www/
 
     echo "*** Cleanup ***"
     rm -rf bower_components

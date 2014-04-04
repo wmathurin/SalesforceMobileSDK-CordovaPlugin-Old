@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-13, salesforce.com, inc.
+ * Copyright (c) 2012-14, salesforce.com, inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided
@@ -25,7 +25,7 @@
  */
 
 // Version this js was shipped with
-var SALESFORCE_MOBILE_SDK_VERSION = "2.2.0.unstable";
+var SALESFORCE_MOBILE_SDK_VERSION = "2.3.0.unstable";
 var appStartTime = (new Date()).getTime();  // Used for debug timing measurements.
 
 /**
@@ -36,12 +36,10 @@ var appStartTime = (new Date()).getTime();  // Used for debug timing measurement
 var log = function(section, txt) {
     console.log("jslog: " + txt);
     if ((typeof debugMode !== "undefined") && (debugMode === true)) {
-        var now = new Date();
-        var fullTxt = "<p><i><b>* At " + (now.getTime() - appStartTime) + "ms:</b></i> " + txt + "</p>";
         var sectionElt = document.getElementById(section);
         if (sectionElt) {
             sectionElt.style.display = "block";
-            document.getElementById(section).innerHTML += fullTxt;
+            document.getElementById(section).innerHTML += ("<p><i><b>* At " + (new Date().getTime() - appStartTime) + "ms:</b></i> " + txt + "</p>");
         }
     }
 };
