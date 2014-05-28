@@ -38,7 +38,7 @@ else
     echo "Copying SalesforceSDKCore library out of bower_components"    
     unzip bower_components/mobilesdk-ios-distribution/SalesforceSDKCore-Debug.zip -d tmp
     echo "Copying SalesforceSecurity library out of bower_components"    
-    unzip bower_components/mobilesdk-ios-distribution/SalesforceSecurity-Debug.zip -d tmp
+    unzip bower_components/mobilesdk-ios-distribution/SalesforceySecurity-Debug.zip -d tmp
     echo "Copying SalesforceCommonUtils library out of bower_components"    
     cp -r bower_components/mobilesdk-ios-dependencies/SalesforceCommonUtils  tmp
     echo "Copying openssl library out of bower_components"    
@@ -62,6 +62,7 @@ else
     copy_and_fix_header SFPushNotificationManager.h
     copy_and_fix_header SFUserAccountConstants.h
     copy_and_fix_header SFUserAccountManager.h
+    copy_and_fix_header SFUserAccount.h
     echo "Copying needed libraries to src/ios/frameworks"
     copy_lib ()
     {
