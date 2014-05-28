@@ -49,15 +49,17 @@ else
         echo "* Fixing and copying $1"
         find tmp -name $1 | xargs sed 's/\#import\ \<Salesforce.*\/\(.*\)\>/#import "\1"/' > src/ios/headers/$1
     }
+    copy_and_fix_header SFAuthenticationManager.h
     copy_and_fix_header SFHybridViewConfig.h
     copy_and_fix_header SFHybridViewController.h
+    copy_and_fix_header SFIdentityCoordinator.h
+    copy_and_fix_header SFLogger.h
     copy_and_fix_header SFOAuthCoordinator.h
     copy_and_fix_header SFOAuthCredentials.h
     copy_and_fix_header SFOAuthInfo.h
-    copy_and_fix_header SFAuthenticationManager.h
-    copy_and_fix_header SFIdentityCoordinator.h
     copy_and_fix_header SFPushNotificationManager.h
-    copy_and_fix_header SFLogger.h
+    copy_and_fix_header SFUserAccountConstants.h
+    copy_and_fix_header SFUserAccountManager.h
     echo "Copying needed libraries to src/ios/frameworks"
     copy_lib ()
     {
@@ -68,9 +70,10 @@ else
     copy_lib libSalesforceHybridSDK.a
     copy_lib libSalesforceOAuth.a
     copy_lib libSalesforceSDKCore.a
+    copy_lib libSalesforceSecurity.a
     copy_lib libcrypto.a
-    copy_lib libssl.a
     copy_lib libsqlcipher.a
+    copy_lib libssl.a
     echo "Copying Settings.bundle out of bower_components"
     cp -r bower_components/mobilesdk-ios-package/Templates/NativeAppTemplate/__NativeTemplateAppName__/__NativeTemplateAppName__/Settings.bundle src/ios/resources/
     echo "Copying SalesforceSDKResources.bundle out of bower_components"
