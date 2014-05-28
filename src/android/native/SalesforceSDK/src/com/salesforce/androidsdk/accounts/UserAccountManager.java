@@ -67,6 +67,9 @@ public class UserAccountManager {
 	private static final String CURRENT_USER_PREF = "current_user_info";
 	private static final String USER_ID_KEY = "user_id";
 	private static final String ORG_ID_KEY = "org_id";
+
+	public static final String USER_SWITCH_INTENT_ACTION = "com.salesforce.USERSWITCHED";
+
 	private static UserAccountManager INSTANCE;
 
 	private Context context;
@@ -270,6 +273,7 @@ public class UserAccountManager {
 		final Account account = cm.getAccountByName(user.getAccountName());
 		storeCurrentUserInfo(user.getUserId(), user.getOrgId());
 		cm.peekRestClient(account);
+		sendUserSwitchIntent();
 	}
 
 	/**
@@ -352,11 +356,24 @@ public class UserAccountManager {
 		final String username = SalesforceSDKManager.decryptWithPasscode(accountManager.getUserData(account, AuthenticatorService.KEY_USERNAME), SalesforceSDKManager.getInstance().getPasscodeHash());
 		final String accountName = accountManager.getUserData(account, AccountManager.KEY_ACCOUNT_NAME);
 		final String clientId = SalesforceSDKManager.decryptWithPasscode(accountManager.getUserData(account, AuthenticatorService.KEY_CLIENT_ID), SalesforceSDKManager.getInstance().getPasscodeHash());
+		final String encCommunityId = accountManager.getUserData(account, AuthenticatorService.KEY_COMMUNITY_ID);
+        String communityId = null;
+        if (encCommunityId != null) {
+        	communityId = SalesforceSDKManager.decryptWithPasscode(encCommunityId,
+        			SalesforceSDKManager.getInstance().getPasscodeHash());
+        }
+        final String encCommunityUrl = accountManager.getUserData(account, AuthenticatorService.KEY_COMMUNITY_URL);
+        String communityUrl = null;
+        if (encCommunityUrl != null) {
+        	communityUrl = SalesforceSDKManager.decryptWithPasscode(encCommunityUrl,
+        			SalesforceSDKManager.getInstance().getPasscodeHash());
+        }
 		if (authToken == null || instanceServer == null || userId == null || orgId == null) {
 			return null;
 		}
 		return new UserAccount(authToken, refreshToken, loginServer, idUrl,
-				instanceServer, orgId, userId, username, accountName, clientId);
+				instanceServer, orgId, userId, username, accountName, clientId,
+				communityId, communityUrl);
 	}
 
 	/**
@@ -392,5 +409,13 @@ public class UserAccountManager {
         	}
         }
 		return null;
+	}
+
+	/**
+	 * Broadcasts an intent that a user switch has occurred.
+	 */
+	public void sendUserSwitchIntent() {
+		final Intent intent = new Intent(USER_SWITCH_INTENT_ACTION);
+		SalesforceSDKManager.getInstance().getAppContext().sendBroadcast(intent);
 	}
 }

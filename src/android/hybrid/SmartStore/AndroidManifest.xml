@@ -2,13 +2,14 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.salesforce.androidsdk.smartstore"
-	android:versionCode="34"
+	android:versionCode="35"
 	android:versionName="2.3.0.unstable">
-	
-	<application>
-        <!--  SmartStore Inpsector screen -->
-        <activity android:name="com.salesforce.androidsdk.smartstore.ui.SmartStoreInspectorActivity" />
-	</application>        
 
     <uses-sdk android:minSdkVersion="8" />
+
+	<application>
+
+        <!--  SmartStore Inspector screen -->
+        <activity android:name="com.salesforce.androidsdk.smartstore.ui.SmartStoreInspectorActivity" />
+	</application>
 </manifest>

@@ -44,7 +44,10 @@ import com.salesforce.androidsdk.accounts.UserAccount;
  */
 public class DBOpenHelper extends SQLiteOpenHelper {
 
-	public static final int DB_VERSION = 1;
+	// 1 --> up until 2.3
+	// 2 --> starting at 2.3 (new meta data table long_operations_status)
+	public static final int DB_VERSION = 2;
+
 	public static final String DB_NAME = "smartstore%s.db";
 
 	private static Map<String, DBOpenHelper> openHelpers;
@@ -124,7 +127,14 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		// do the needful if DB_VERSION has changed
+		if (oldVersion == 1) {
+			SmartStore.createLongOperationsStatusTable(db);
+		}
+	}
+	
+	@Override
+	public void onOpen(SQLiteDatabase db) {
+		(new SmartStore(db)).resumeLongOperations();
 	}
 
 	/**
@@ -175,7 +185,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     	final String dbPath = ctx.getApplicationInfo().dataDir + "/databases";
     	final File dir = new File(dbPath);
     	if (dir != null) {
-        	final SmartStoreFileFilter fileFilter = new SmartStoreFileFilter();
+        	final SmartStoreFileFilter fileFilter = new SmartStoreFileFilter(dbName);
         	final File[] fileList = dir.listFiles();
         	if (fileList != null) {
             	for (final File file : fileList) {
@@ -205,12 +215,21 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      */
     private static class SmartStoreFileFilter implements FilenameFilter {
 
-    	private static final String SMARTSTORE_FILE_PREFIX = String.format(DB_NAME, "_");
+    	private String dbName;
+
+    	/**
+    	 * Parameterized constructor.
+    	 *
+    	 * @param dbName Database name.
+    	 */
+    	public SmartStoreFileFilter(String dbName) {
+    		this.dbName = dbName;
+    	}
 
 		@Override
 		public boolean accept(File dir, String filename) {
-			final String subString = SMARTSTORE_FILE_PREFIX.substring(0,
-					SMARTSTORE_FILE_PREFIX.length() - 3);
+			final String subString = dbName.substring(0,
+					dbName.length() - 3);
 			if (filename != null && filename.startsWith(subString)) {
 				return true;
 			}

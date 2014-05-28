@@ -42,8 +42,9 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
-import android.content.Intent;
+import android.annotation.TargetApi;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -54,6 +55,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.salesforce.androidsdk.accounts.UserAccountManager;
 import com.salesforce.androidsdk.app.SalesforceSDKManager;
 import com.salesforce.androidsdk.auth.HttpAccess.NoNetworkException;
 import com.salesforce.androidsdk.rest.ApiVersionStrings;
@@ -70,6 +72,7 @@ import com.salesforce.androidsdk.security.PasscodeManager;
 import com.salesforce.androidsdk.util.EventsObservable;
 import com.salesforce.androidsdk.util.EventsObservable.EventType;
 import com.salesforce.androidsdk.util.TokenRevocationReceiver;
+import com.salesforce.androidsdk.util.UserSwitchReceiver;
 
 /**
  * Class that defines the main activity for a PhoneGap-based application.
@@ -86,6 +89,8 @@ public class SalesforceDroidGapActivity extends CordovaActivity {
     private static final String USER_ID = "userId";
     private static final String REFRESH_TOKEN = "refreshToken";
     private static final String ACCESS_TOKEN = "accessToken";
+    private static final String COMMUNITY_ID = "communityId";
+    private static final String COMMUNITY_URL = "communityUrl";
 	
     // Used in refresh REST call
     private static final String API_VERSION = ApiVersionStrings.VERSION_NUMBER;
@@ -98,6 +103,8 @@ public class SalesforceDroidGapActivity extends CordovaActivity {
 	private BootConfig bootconfig;
     private PasscodeManager passcodeManager;
     private TokenRevocationReceiver tokenRevocationReceiver;
+    private UserSwitchReceiver userSwitchReceiver;
+    private boolean tokenRevocationRegistered;
 
 	// Web app loaded?
 	private boolean webAppLoaded = false;	
@@ -113,17 +120,12 @@ public class SalesforceDroidGapActivity extends CordovaActivity {
 
         // Get clientManager
         clientManager = buildClientManager();
-		
-        // Get client (if already logged in)
-        try {
-			client = clientManager.peekRestClient();
-		} catch (AccountInfoNotFoundException e) {
-			client = null;
-		}
-        
+
         // Passcode manager
         passcodeManager = SalesforceSDKManager.getInstance().getPasscodeManager();
         tokenRevocationReceiver = new TokenRevocationReceiver(this);
+        userSwitchReceiver = new DroidGapUserSwitchReceiver();
+        registerReceiver(userSwitchReceiver, new IntentFilter(UserAccountManager.USER_SWITCH_INTENT_ACTION));
 
         // Ensure we have a CookieSyncManager
         CookieSyncManager.createInstance(this);
@@ -181,11 +183,17 @@ public class SalesforceDroidGapActivity extends CordovaActivity {
     @Override
     public void onResume() {
         super.onResume();
-        
-        restartIfUserSwitched();
-        
-    	registerReceiver(tokenRevocationReceiver, new IntentFilter(ClientManager.ACCESS_TOKEN_REVOKE_INTENT));
+        if (!tokenRevocationRegistered) {
+            registerReceiver(tokenRevocationReceiver, new IntentFilter(ClientManager.ACCESS_TOKEN_REVOKE_INTENT));
+        }
     	if (passcodeManager.onResume(this)) {
+
+            // Get client (if already logged in)
+            try {
+    			client = clientManager.peekRestClient();
+    		} catch (AccountInfoNotFoundException e) {
+    			client = null;
+    		}
 
     		// Not logged in
         	if (client == null) {
@@ -209,17 +217,24 @@ public class SalesforceDroidGapActivity extends CordovaActivity {
         }
     }
 
+    /**
+     * Restarts the activity if the user has been switched.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void restartIfUserSwitched() {
 		if (client != null) {
             try {
     			RestClient currentClient = clientManager.peekRestClient();
     			if (currentClient != null && !currentClient.getClientInfo().userId.equals(client.getClientInfo().userId)) {
-    				this.finish();
-    		        final Intent i = new Intent(this, this.getClass());
-    		        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    		        this.startActivity(i);
+    		        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB) {
+        				this.recreate();
+    		        } else {
+    		        	this.onDestroy();
+    		        	this.onCreate(null);
+    		        }
     			}
     		} catch (AccountInfoNotFoundException e) {
+            	Log.i("SalesforceDroidGapActivity.restartIfUserSwitched", "No user account found");
     		}
         }
 	}
@@ -304,7 +319,15 @@ public class SalesforceDroidGapActivity extends CordovaActivity {
         super.onPause();
         passcodeManager.onPause(this);
         CookieSyncManager.getInstance().stopSync();
-    	unregisterReceiver(tokenRevocationReceiver);
+        if (tokenRevocationRegistered) {
+        	unregisterReceiver(tokenRevocationReceiver);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+    	unregisterReceiver(userSwitchReceiver);
+    	super.onDestroy();
     }
 
     @Override
@@ -404,7 +427,7 @@ public class SalesforceDroidGapActivity extends CordovaActivity {
         	final ClientInfo clientInfo = SalesforceDroidGapActivity.this.client.getClientInfo();
             URI instanceUrl = null;
             if (clientInfo != null) {
-            	instanceUrl = clientInfo.instanceUrl;
+            	instanceUrl = clientInfo.getInstanceUrl();
             }
             setVFCookies(instanceUrl);
     	}
@@ -430,7 +453,7 @@ public class SalesforceDroidGapActivity extends CordovaActivity {
         			return true;
         		}
         	});
-        	view.loadUrl(instanceUrl.toString() + "/visualforce/session?url=/apexpages/utils/ping.apexp&autoPrefixVFDomain=true");	
+        	view.loadUrl(instanceUrl.toString() + "/visualforce/session?url=/apexpages/utils/ping.apexp&autoPrefixVFDomain=true");
     	}
     }
 
@@ -462,10 +485,10 @@ public class SalesforceDroidGapActivity extends CordovaActivity {
      * @return front-door url
      */
     public String getFrontDoorUrl(String url) {
-		String frontDoorUrl = client.getClientInfo().instanceUrl.toString() + "/secur/frontdoor.jsp?";
+		String frontDoorUrl = client.getClientInfo().getInstanceUrlAsString() + "/secur/frontdoor.jsp?";
 		List<NameValuePair> params = new LinkedList<NameValuePair>();
 		params.add(new BasicNameValuePair("sid", client.getAuthToken()));
-		params.add(new BasicNameValuePair("retURL", url));
+		params.add(new BasicNameValuePair("retURL", client.getClientInfo().resolveUrl(url).toString()));
 		params.add(new BasicNameValuePair("display", "touch"));
 		frontDoorUrl += URLEncodedUtils.format(params, "UTF-8");
     	return frontDoorUrl;
@@ -516,7 +539,7 @@ public class SalesforceDroidGapActivity extends CordovaActivity {
 	   final ClientInfo clientInfo = SalesforceDroidGapActivity.this.client.getClientInfo();
        URI instanceUrl = null;
        if (clientInfo != null) {
-    	   instanceUrl = clientInfo.instanceUrl;
+    	   instanceUrl = clientInfo.getInstanceUrl();
        }
        String host = null;
        if (instanceUrl != null) {
@@ -548,6 +571,8 @@ public class SalesforceDroidGapActivity extends CordovaActivity {
 	       data.put(IDENTITY_URL, clientInfo.identityUrl.toString());
 	       data.put(INSTANCE_URL, clientInfo.instanceUrl.toString());
 	       data.put(USER_AGENT, SalesforceSDKManager.getInstance().getUserAgent());
+	       data.put(COMMUNITY_ID, clientInfo.communityId);
+	       data.put(COMMUNITY_URL, clientInfo.communityUrl);
 	       return new JSONObject(data);
 	   } else {
 		   return null;
@@ -555,8 +580,7 @@ public class SalesforceDroidGapActivity extends CordovaActivity {
    }
 
     /**
-     * Exception thrown if initial web page load fails
-     *
+     * Exception thrown if initial web page load fails.
      */
     public static class HybridAppLoadException extends RuntimeException {
 
@@ -565,6 +589,18 @@ public class SalesforceDroidGapActivity extends CordovaActivity {
 		}
 
 		private static final long serialVersionUID = 1L;
-	
+    }
+
+    /**
+     * Acts on the user switch event.
+     *
+     * @author bhariharan
+     */
+    private class DroidGapUserSwitchReceiver extends UserSwitchReceiver {
+
+		@Override
+		protected void onUserSwitch() {
+			restartIfUserSwitched();
+		}
     }
 }
