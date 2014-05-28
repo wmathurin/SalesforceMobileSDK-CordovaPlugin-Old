@@ -56,6 +56,7 @@ else
     copy_and_fix_header SFHybridViewConfig.h
     copy_and_fix_header SFHybridViewController.h
     copy_and_fix_header SFIdentityCoordinator.h
+    copy_and_fix_header SFIdentityData.h
     copy_and_fix_header SFLogger.h
     copy_and_fix_header SFOAuthCoordinator.h
     copy_and_fix_header SFOAuthCredentials.h
