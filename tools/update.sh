@@ -35,8 +35,10 @@ else
     unzip bower_components/mobilesdk-ios-distribution/SalesforceHybridSDK-Debug.zip -d tmp
     echo "Copying SalesforceOAuth library out of bower_components"    
     unzip bower_components/mobilesdk-ios-distribution/SalesforceOAuth-Debug.zip -d tmp
-    echo "Copying SalesforceCore library out of bower_components"    
+    echo "Copying SalesforceSDKCore library out of bower_components"    
     unzip bower_components/mobilesdk-ios-distribution/SalesforceSDKCore-Debug.zip -d tmp
+    echo "Copying SalesforceSecurity library out of bower_components"    
+    unzip bower_components/mobilesdk-ios-distribution/SalesforceSecurity-Debug.zip -d tmp
     echo "Copying SalesforceCommonUtils library out of bower_components"    
     cp -r bower_components/mobilesdk-ios-dependencies/SalesforceCommonUtils  tmp
     echo "Copying openssl library out of bower_components"    
