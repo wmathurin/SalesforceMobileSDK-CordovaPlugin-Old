@@ -34,6 +34,7 @@
 
     <!-- Header files -->
     <header-file src="src/ios/headers/SFAuthenticationManager.h" target-dir="salesforce"/>
+    <header-file src="src/ios/headers/SFCommunityData.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFHybridViewConfig.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFHybridViewController.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFIdentityCoordinator.h" target-dir="salesforce" />
@@ -42,9 +43,9 @@
     <header-file src="src/ios/headers/SFOAuthCredentials.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFOAuthInfo.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFPushNotificationManager.h" target-dir="salesforce" />
+    <header-file src="src/ios/headers/SFUserAccount.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFUserAccountConstants.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFUserAccountManager.h" target-dir="salesforce" />
-    <header-file src="src/ios/headers/SFUserAccount.h" target-dir="salesforce" />
 
     <!-- Resource bundles -->
     <resource-file src="src/ios/resources/Settings.bundle" />

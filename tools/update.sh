@@ -52,6 +52,7 @@ else
         find tmp -name $1 | xargs sed 's/\#import\ \<Salesforce.*\/\(.*\)\>/#import "\1"/' > src/ios/headers/$1
     }
     copy_and_fix_header SFAuthenticationManager.h
+    copy_and_fix_header SFCommunityData.h
     copy_and_fix_header SFHybridViewConfig.h
     copy_and_fix_header SFHybridViewController.h
     copy_and_fix_header SFIdentityCoordinator.h
@@ -60,9 +61,9 @@ else
     copy_and_fix_header SFOAuthCredentials.h
     copy_and_fix_header SFOAuthInfo.h
     copy_and_fix_header SFPushNotificationManager.h
+    copy_and_fix_header SFUserAccount.h
     copy_and_fix_header SFUserAccountConstants.h
     copy_and_fix_header SFUserAccountManager.h
-    copy_and_fix_header SFUserAccount.h
     echo "Copying needed libraries to src/ios/frameworks"
     copy_lib ()
     {
