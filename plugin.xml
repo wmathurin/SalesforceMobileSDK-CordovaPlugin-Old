@@ -51,6 +51,7 @@
     <!-- Resource bundles -->
     <resource-file src="src/ios/resources/Settings.bundle" />
     <resource-file src="src/ios/resources/SalesforceSDKResources.bundle" />
+    <resource-file src="src/ios/resources/Images.xcassets" />
 
     <!-- Libraries -->
     <source-file src="src/ios/frameworks/libSalesforceCommonUtils.a" framework="true" />
