@@ -30,4 +30,4 @@ var appName = extractAppName();
 console.log('Copying AppDelegate');
 copyFile('plugins/com.salesforce/src/ios/classes/AppDelegate.h', 'platforms/ios/' + appName + '/Classes/AppDelegate.h');
 copyFile('plugins/com.salesforce/src/ios/classes/AppDelegate.m', 'platforms/ios/' + appName + '/Classes/AppDelegate.m');
-copyFile('plugins/com.salesforce/src/ios/App-Prefix.pch', 'platforms/ios/' + appName + '-Prefix.pch');
+copyFile('plugins/com.salesforce/src/ios/App-Prefix.pch', 'platforms/ios/' + appName + '/' + appName + '-Prefix.pch');

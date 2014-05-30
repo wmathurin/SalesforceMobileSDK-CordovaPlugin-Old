@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export OPTION=$1
+
 # Helper functions
 copy_and_fix ()
 {
@@ -32,14 +34,17 @@ then
     exit 0
 else
     echo "Found SalesforceMobileSDK-iOS"
-    echo "Building SalesforceMobileSDK-iOS"
-    cd $IOS_SDK
-    ./install.sh
-    cd build
-    ant 
-    cd ../../SalesforceMobileSDK-CordovaPlugin
+    if [ "$OPTION" != "nobuild" ] 
+    then
+        echo "Building SalesforceMobileSDK-iOS"
+        cd $IOS_SDK
+        ./install.sh
+        cd build
+        ant 
+        cd ../../SalesforceMobileSDK-CordovaPlugin
+    fi
 fi
-    
+    ]
 if [ ! -d "$ANDROID_SDK" ]
 then
     echo "You must clone SalesforceMobileSDK-Android next to SalesforceMobileSDK-CordovaPlugin"
@@ -104,6 +109,8 @@ echo "Copying sqlcipher library"
 cp -r $IOS_SDK/external/ThirdPartyDependencies/sqlcipher  tmp
 echo "Copying AppDelegate"    
 cp $IOS_SDK/hybrid/SampleApps/VFConnector/VFConnector/Classes/AppDelegate.*  tmp
+echo "Copying pch"
+cp $IOS_SDK/hybrid/SampleApps/VFConnector/VFConnector/VFConnector-Prefix.pch tmp/App-Prefix.pch
 echo "Copying and fixing needed headers to src/ios/headers"
 copy_and_fix SFAuthenticationManager.h headers
 copy_and_fix SFCommunityData.h headers
@@ -121,6 +128,7 @@ copy_and_fix SFUserAccountConstants.h headers
 copy_and_fix SFUserAccountManager.h headers
 copy_and_fix AppDelegate.h classes
 copy_and_fix AppDelegate.m classes
+copy_and_fix App-Prefix.pch ''
 echo "Copying needed libraries to src/ios/frameworks"
 copy_lib libSalesforceCommonUtils.a
 copy_lib libSalesforceHybridSDK.a
@@ -136,8 +144,6 @@ echo "Copying Settings.bundle"
 cp -r $IOS_SDK/hybrid/SampleApps/VFConnector/VFConnector/Settings.bundle src/ios/resources/
 echo "Copying SalesforceSDKResources.bundle"
 cp -r $IOS_SDK/shared/resources/SalesforceSDKResources.bundle src/ios/resources/
-echo "Copying pch"
-cp $IOS_SDK/hybrid/SampleApps/VFConnector/VFConnector/VFConnector-Prefix.pch src/ios/App-Prefix.pch
 
 echo "*** Shared ***"
 echo "Copying split cordova.force.js out of bower_components"
