@@ -136,6 +136,8 @@ echo "Copying Settings.bundle"
 cp -r $IOS_SDK/hybrid/SampleApps/VFConnector/VFConnector/Settings.bundle src/ios/resources/
 echo "Copying SalesforceSDKResources.bundle"
 cp -r $IOS_SDK/shared/resources/SalesforceSDKResources.bundle src/ios/resources/
+echo "Copying pch"
+cp $IOS_SDK/hybrid/SampleApps/VFConnector/VFConnector/VFConnector-Prefix.pch src/ios/App-Prefix.pch
 
 echo "*** Shared ***"
 echo "Copying split cordova.force.js out of bower_components"
