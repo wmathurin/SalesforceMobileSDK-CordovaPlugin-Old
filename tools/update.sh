@@ -139,9 +139,9 @@ copy_lib libcrypto.a
 copy_lib libsqlcipher.a
 copy_lib libssl.a
 echo "Copying Images.xcassets"
-cp -r $IOS_SDK/hybrid/SampleApps/VFConnector/VFConnector/Images.xcassets src/ios/resources/
+cp -r $IOS_SDK/shared/resources/ImagesHybrid.xcassets src/ios/resources/Images.xcassets
 echo "Copying Settings.bundle"
-cp -r $IOS_SDK/hybrid/SampleApps/VFConnector/VFConnector/Settings.bundle src/ios/resources/
+cp -r $IOS_SDK/shared/resources/Settings.bundle src/ios/resources/
 echo "Copying SalesforceSDKResources.bundle"
 cp -r $IOS_SDK/shared/resources/SalesforceSDKResources.bundle src/ios/resources/
 
