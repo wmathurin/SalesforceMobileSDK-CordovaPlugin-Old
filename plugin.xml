@@ -47,6 +47,7 @@
     <header-file src="src/ios/headers/SFUserAccount.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFUserAccountConstants.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFUserAccountManager.h" target-dir="salesforce" />
+    <header-file src="src/ios/headers/SFDefaultUserManagementViewController.h" target-dir="salesforce" />
 
     <!-- Resource bundles -->
     <resource-file src="src/ios/resources/Settings.bundle" />

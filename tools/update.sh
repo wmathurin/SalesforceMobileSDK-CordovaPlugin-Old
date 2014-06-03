@@ -126,6 +126,7 @@ copy_and_fix SFPushNotificationManager.h headers
 copy_and_fix SFUserAccount.h headers
 copy_and_fix SFUserAccountConstants.h headers
 copy_and_fix SFUserAccountManager.h headers
+copy_and_fix SFDefaultUserManagementViewController.h headers
 copy_and_fix AppDelegate.h classes
 copy_and_fix AppDelegate.m classes
 copy_and_fix App-Prefix.pch ''
