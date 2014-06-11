@@ -62,9 +62,6 @@ then
     exit 0
 else
     echo "Found SalesforceMobileSDK-Shared"
-    cd $ANDROID_SDK
-    ./install.sh
-    cd ../SalesforceMobileSDK-CordovaPlugin
 fi
 
 echo "*** Creating directories ***"
