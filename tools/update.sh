@@ -104,10 +104,8 @@ echo "Copying openssl library"
 cp -r $IOS_SDK/external/ThirdPartyDependencies/openssl  tmp
 echo "Copying sqlcipher library"    
 cp -r $IOS_SDK/external/ThirdPartyDependencies/sqlcipher  tmp
-echo "Copying AppDelegate"    
-cp $IOS_SDK/hybrid/SampleApps/VFConnector/VFConnector/Classes/AppDelegate.*  tmp
-echo "Copying pch"
-cp $IOS_SDK/hybrid/SampleApps/VFConnector/VFConnector/VFConnector-Prefix.pch tmp/App-Prefix.pch
+echo "Copying AppDelegate+SalesforceHybridSDK"    
+cp $IOS_SDK/shared/hybrid/AppDelegate+SalesforceHybridSDK.*  tmp
 echo "Copying and fixing needed headers to src/ios/headers"
 copy_and_fix SFAuthenticationManager.h headers
 copy_and_fix SFCommunityData.h headers
@@ -124,9 +122,8 @@ copy_and_fix SFUserAccount.h headers
 copy_and_fix SFUserAccountConstants.h headers
 copy_and_fix SFUserAccountManager.h headers
 copy_and_fix SFDefaultUserManagementViewController.h headers
-copy_and_fix AppDelegate.h classes
-copy_and_fix AppDelegate.m classes
-copy_and_fix App-Prefix.pch ''
+copy_and_fix AppDelegate+SalesforceHybridSDK.h classes
+copy_and_fix AppDelegate+SalesforceHybridSDK.m classes
 echo "Copying needed libraries to src/ios/frameworks"
 copy_lib libSalesforceCommonUtils.a
 copy_lib libSalesforceHybridSDK.a

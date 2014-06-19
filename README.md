@@ -10,6 +10,5 @@ cordova plugin add https://github.com/wmathurin/SalesforceMobileSDK-CordovaPlugi
 cordova platform add android
 node ./plugins/com.salesforce/tools/postinstall-android.js
 cordova platform add ios
-node ./plugins/com.salesforce/tools/postinstall-ios.js
 cordova build
 </pre>

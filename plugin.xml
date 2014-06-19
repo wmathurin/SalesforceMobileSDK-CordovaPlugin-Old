@@ -48,6 +48,10 @@
     <header-file src="src/ios/headers/SFUserAccountConstants.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFUserAccountManager.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFDefaultUserManagementViewController.h" target-dir="salesforce" />
+	<header-file src="src/ios/AppDelegate+SalesforceHybridSDK.h"  />
+
+    <!-- Source files -->
+    <source-file src="src/ios/AppDelegate+SalesforceHybridSDK.m" />
 
     <!-- Resource bundles -->
     <resource-file src="src/ios/resources/Settings.bundle" />
@@ -79,10 +83,6 @@
     <framework src="SystemConfiguration.framework" weak="true" />
     <framework src="UIKit.framework" weak="true" />
     <framework src="AssetsLibrary.framework" weak="true" />
-
-    <info>
-      You need to run: node plugins/com.salesforce/tools/postinstall-ios.js
-    </info>
   </platform>
 
   <!-- android -->
