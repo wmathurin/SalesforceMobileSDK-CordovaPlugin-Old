@@ -48,10 +48,10 @@
     <header-file src="src/ios/headers/SFUserAccountConstants.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFUserAccountManager.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFDefaultUserManagementViewController.h" target-dir="salesforce" />
-	<header-file src="src/ios/AppDelegate+SalesforceHybridSDK.h"  />
+	<header-file src="src/ios/headers/AppDelegate+SalesforceHybridSDK.h"  />
 
     <!-- Source files -->
-    <source-file src="src/ios/AppDelegate+SalesforceHybridSDK.m" />
+    <source-file src="src/ios/classes/AppDelegate+SalesforceHybridSDK.m" />
 
     <!-- Resource bundles -->
     <resource-file src="src/ios/resources/Settings.bundle" />

@@ -122,7 +122,7 @@ copy_and_fix SFUserAccount.h headers
 copy_and_fix SFUserAccountConstants.h headers
 copy_and_fix SFUserAccountManager.h headers
 copy_and_fix SFDefaultUserManagementViewController.h headers
-copy_and_fix AppDelegate+SalesforceHybridSDK.h classes
+copy_and_fix AppDelegate+SalesforceHybridSDK.h headers
 copy_and_fix AppDelegate+SalesforceHybridSDK.m classes
 echo "Copying needed libraries to src/ios/frameworks"
 copy_lib libSalesforceCommonUtils.a
