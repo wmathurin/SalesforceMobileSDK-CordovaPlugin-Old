@@ -39,14 +39,14 @@ var fixSDKProjectProperties = function(data) {
 
 // Function to fix AndroidManifest.xml
 var fixAndroidManifest = function(data) {
-    // Remove first <application />
-    data = data.substring(0, data.indexOf("<application")) + data.substring(data.indexOf("</application>") + "</application>".length);
+    // Change app name and manage space activity
+    var androidLabel = "android:label=\"@string/app_name\"";
+    var androidManageSpaceActivity = "android:manageSpaceActivity=\"com.salesforce.androidsdk.ui.ManageSpaceActivity\"";
+    var appName = "com.salesforce.androidsdk." + (useSmartStore  ? "smartstore.app.HybridAppWithSmartStore"  : "app.HybridApp");
+    var androidNameToMatch = "android:name=\"[^\"]*\"";
+    var androidName = "android:name=\"" + appName + "\"";
+    data = data.replace(new RegExp(androidLabel + " " + androidNameToMatch), androidLabel + " " + androidName + " " + androidManageSpaceActivity);
 
-    // Change app class when using smartstore
-    if (useSmartStore) {
-        data = data.replace(/com\.salesforce\.androidsdk\.app\.HybridApp/, 'com.salesforce.androidsdk.smartstore.app.HybridAppWithSmartStore');
-    }
-    
     // Change target api
     data = data.replace(/android\:targetSdkVersion\=\"19\"/, 'android:targetSdkVersion="' + targetAndroidApi + '"');
 
