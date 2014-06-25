@@ -70,8 +70,7 @@ rm -rf tmp src
 echo "Creating tmp directory"
 mkdir -p tmp
 echo "Creating android directories"
-mkdir -p src/android/native
-mkdir -p src/android/hybrid
+mkdir -p src/android/libs
 mkdir -p src/android/assets
 echo "Creating ios directories"
 mkdir -p src/ios/headers
@@ -81,13 +80,13 @@ mkdir -p src/ios/resources
 
 echo "*** Android ***"
 echo "Copying SalesforceSDK library"
-cp -r $ANDROID_SDK/native/SalesforceSDK src/android/native/
+cp -r $ANDROID_SDK/libs/SalesforceSDK src/android/libs/
 echo "Copying SmartStore library"
-cp -r $ANDROID_SDK/hybrid/SmartStore src/android/hybrid/
+cp -r $ANDROID_SDK/libs/SmartStore src/android/libs/
 echo "Copying icu461.zip"
 cp $ANDROID_SDK/external/sqlcipher/assets/icudt46l.zip src/android/assets/
 echo "Copying sqlcipher"
-cp -r $ANDROID_SDK/external/sqlcipher/libs/* src/android/hybrid/SmartStore/libs/    
+cp -r $ANDROID_SDK/external/sqlcipher/libs/* src/android/libs/SmartStore/libs/    
 
 echo "*** iOS ***"
 echo "Copying SalesforceHybridSDK library"    
