@@ -39,16 +39,22 @@ var fixSDKProjectProperties = function(data) {
 
 // Function to fix AndroidManifest.xml
 var fixAndroidManifest = function(data) {
-    // Change app name and manage space activity
-    var androidLabel = "android:label=\"@string/app_name\"";
-    var androidManageSpaceActivity = "android:manageSpaceActivity=\"com.salesforce.androidsdk.ui.ManageSpaceActivity\"";
+    // Fix application tag
     var appName = "com.salesforce.androidsdk." + (useSmartStore  ? "smartstore.app.HybridAppWithSmartStore"  : "app.HybridApp");
-    var androidNameToMatch = "android:name=\"[^\"]*\"";
-    var androidName = "android:name=\"" + appName + "\"";
-    data = data.replace(new RegExp(androidLabel + " " + androidNameToMatch), androidLabel + " " + androidName + " " + androidManageSpaceActivity);
 
-    // Change target api
-    data = data.replace(/android\:targetSdkVersion\=\"19\"/, 'android:targetSdkVersion="' + targetAndroidApi + '"');
+    // In case the script was run twice
+    if (data.indexOf(appName) == -1) {
+
+        var applicationTag = '<application android:hardwareAccelerated="true" android:icon="@drawable/sf__hybrid__icon" android:label="@string/app_name" android:manageSpaceActivity="com.salesforce.androidsdk.ui.ManageSpaceActivity" android:name="' + appName + '">'
+        data = data.replace(/<application [^>]*>/, applicationTag);
+
+        // Comment out first activity
+        data = data.replace(/<activity/, "<!--<activity");
+        data = data.replace(/<\/activity/, "<\/activity>-->");
+
+        // Change target api
+        data = data.replace(/android\:targetSdkVersion\=\"19\"/, 'android:targetSdkVersion="' + targetAndroidApi + '"');
+    }
 
     return data;
 };
