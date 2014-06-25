@@ -50,7 +50,7 @@ var fixAndroidManifest = function(data) {
 
         // Comment out first activity
         data = data.replace(/<activity/, "<!--<activity");
-        data = data.replace(/<\/activity/, "<\/activity>-->");
+        data = data.replace(/<\/activity>/, "</activity>-->");
 
         // Change target api
         data = data.replace(/android\:targetSdkVersion\=\"19\"/, 'android:targetSdkVersion="' + targetAndroidApi + '"');
