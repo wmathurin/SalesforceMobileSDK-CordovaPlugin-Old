@@ -47,9 +47,8 @@
   <dependency id="org.apache.cordova.splashscreen"/>
   <dependency id="org.apache.cordova.statusbar"/>
   <dependency id="org.apache.cordova.vibration"/>
-  <dependency id="org.apache.cordova.test-framework"/>
-  <dependency id="org.apache.cordova.test.whitelist" url="." subdir="cordova-plugin-whitelist" />
-  <dependency id="org.apache.cordova.test.echo" url="." subdir="cordova-plugin-echo" />
+  <dependency id="org.apache.cordova.vibration"/>
+  <dependency id="com.phonegap.plugins.PushPlugin" url="https://github.com/wmathurin/PushPlugin" />
 
   <!-- ios -->
   <platform name="ios">
