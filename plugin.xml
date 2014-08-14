@@ -27,49 +27,30 @@
 	<engine name="cordova" version=">=3.5.0" />
   </engines>
 
-
-  <!-- to make transition to sdk 2.3 easier 
-  <dependency id="org.apache.cordova.battery-status"/>
-  <dependency id="org.apache.cordova.camera"/>
-  <dependency id="org.apache.cordova.console"/>
-  <dependency id="org.apache.cordova.contacts"/>
-  <dependency id="org.apache.cordova.device-motion"/>
-  <dependency id="org.apache.cordova.device-orientation"/>
-  <dependency id="org.apache.cordova.dialogs"/>
-  <dependency id="org.apache.cordova.file"/>
-  <dependency id="org.apache.cordova.file-transfer"/>
-  <dependency id="org.apache.cordova.geolocation"/>
-  <dependency id="org.apache.cordova.globalization"/>
-  <dependency id="org.apache.cordova.inappbrowser"/>
-  <dependency id="org.apache.cordova.media"/>
-  <dependency id="org.apache.cordova.media-capture"/>
-  <dependency id="org.apache.cordova.network-information"/>
-  <dependency id="org.apache.cordova.splashscreen"/>
-  <dependency id="org.apache.cordova.statusbar"/>
-  <dependency id="org.apache.cordova.vibration"/>
-  -->
-
   <dependency id="org.apache.cordova.device"/>
   <dependency id="com.phonegap.plugins.PushPlugin" url="https://github.com/wmathurin/PushPlugin" />
 
   <!-- ios -->
   <platform name="ios">
     <config-file target="config.xml" parent="/*">
-      <access origin="http://127.0.0.1*"/> <!-- allow local pages -->
+      <access origin="http://localhost"/> <!-- allow local pages -->
       <access origin="https://*.force.com" />
       <access origin="https://*.salesforce.com" />
       <feature name="com.salesforce.oauth"><param name="ios-package" value="SalesforceOAuthPlugin"/></feature>
       <feature name="com.salesforce.sdkinfo"><param name="ios-package" value="SFSDKInfoPlugin"/></feature>
+      <feature name="com.salesforce.sfaccountmanager"><param name="ios-package" value="SFAccountManagerPlugin"/></feature>
       <feature name="com.salesforce.smartstore"><param name="ios-package" value="SFSmartStorePlugin"/></feature>
     </config-file>
 
     <!-- Header files -->
     <header-file src="src/ios/headers/SFAuthenticationManager.h" target-dir="salesforce"/>
     <header-file src="src/ios/headers/SFCommunityData.h" target-dir="salesforce" />
+    <header-file src="src/ios/headers/SFDefaultUserManagementViewController.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFHybridViewConfig.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFHybridViewController.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFIdentityCoordinator.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFIdentityData.h" target-dir="salesforce" />
+    <header-file src="src/ios/headers/SFLocalhostSubstitutionCache.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFLogger.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFOAuthCoordinator.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFOAuthCredentials.h" target-dir="salesforce" />
@@ -78,7 +59,6 @@
     <header-file src="src/ios/headers/SFUserAccount.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFUserAccountConstants.h" target-dir="salesforce" />
     <header-file src="src/ios/headers/SFUserAccountManager.h" target-dir="salesforce" />
-    <header-file src="src/ios/headers/SFDefaultUserManagementViewController.h" target-dir="salesforce" />
 	<header-file src="src/ios/headers/AppDelegate+SalesforceHybridSDK.h"  />
 
     <!-- Source files -->

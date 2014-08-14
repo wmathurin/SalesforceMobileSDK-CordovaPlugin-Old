@@ -106,12 +106,15 @@ cp -r $IOS_SDK/external/ThirdPartyDependencies/sqlcipher  tmp
 echo "Copying AppDelegate+SalesforceHybridSDK"    
 cp $IOS_SDK/shared/hybrid/AppDelegate+SalesforceHybridSDK.*  tmp
 echo "Copying and fixing needed headers to src/ios/headers"
+copy_and_fix AppDelegate+SalesforceHybridSDK.h headers
 copy_and_fix SFAuthenticationManager.h headers
 copy_and_fix SFCommunityData.h headers
+copy_and_fix SFDefaultUserManagementViewController.h headers
 copy_and_fix SFHybridViewConfig.h headers
 copy_and_fix SFHybridViewController.h headers
 copy_and_fix SFIdentityCoordinator.h headers
 copy_and_fix SFIdentityData.h headers
+copy_and_fix SFLocalhostSubstitutionCache.h headers
 copy_and_fix SFLogger.h headers
 copy_and_fix SFOAuthCoordinator.h headers
 copy_and_fix SFOAuthCredentials.h headers
@@ -120,8 +123,6 @@ copy_and_fix SFPushNotificationManager.h headers
 copy_and_fix SFUserAccount.h headers
 copy_and_fix SFUserAccountConstants.h headers
 copy_and_fix SFUserAccountManager.h headers
-copy_and_fix SFDefaultUserManagementViewController.h headers
-copy_and_fix AppDelegate+SalesforceHybridSDK.h headers
 copy_and_fix AppDelegate+SalesforceHybridSDK.m classes
 echo "Copying needed libraries to src/ios/frameworks"
 copy_lib libSalesforceCommonUtils.a
