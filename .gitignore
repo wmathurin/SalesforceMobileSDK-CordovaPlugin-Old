@@ -13,3 +13,6 @@ xcuserdata
 .settings
 bower_components/
 tmp/
+SalesforceMobileSDK-Android/
+SalesforceMobileSDK-Shared/
+SalesforceMobileSDK-iOS/
