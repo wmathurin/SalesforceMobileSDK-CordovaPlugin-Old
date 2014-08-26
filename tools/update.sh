@@ -3,18 +3,19 @@
 #set -x
 
 OPT_BUILD="yes"
-OPT_BRANCH="master"
+OPT_BRANCH=""
 
 usage ()
 {
-    echo "usage: $0 [-b <branch name>] [-n]"
+    echo "usage: $0 -b <branch name> [-n]"
     echo "  Where <branch name> is the branch of each SDK to build."
     echo "  -n specifies that the iOS SDK should not be rebuilt."
 }
 
 parse_opts ()
 {
-    while getopts :b:n command_line_opt; do
+    while getopts :b:n command_line_opt
+    do
         case ${command_line_opt} in
             b)
                 OPT_BRANCH=${OPTARG};;
@@ -27,13 +28,21 @@ parse_opts ()
         esac
     done
 
+    if [ "${OPT_BRANCH}" == "" ]
+    then
+        echo "You must specify a value for the branch."
+        usage
+        exit 1
+    fi
+
     valid_branch_regex='^[a-zA-Z0-9][a-zA-Z0-9]*(/[a-zA-Z0-9][a-zA-Z0-9]*)?$'
-    if [[ "${OPT_BRANCH}" =~ $valid_branch_regex ]]; then
+    if [[ "${OPT_BRANCH}" =~ $valid_branch_regex ]]
+    then
         # No action
         :
     else
         echo "${OPT_BRANCH} is not a valid branch name.  Should be in the format <[remote/]branch name>"
-        exit 1
+        exit 2
     fi
 }
 
@@ -60,7 +69,8 @@ get_root_folder ()
 update_branch ()
 {
     trimmed_branch_name=`echo "${OPT_BRANCH}" | sed 's/\///g'`
-    if [ "${trimmed_branch_name}" == "${OPT_BRANCH}" ]; then
+    if [ "${trimmed_branch_name}" == "${OPT_BRANCH}" ]
+    then
         # Not a remote branch, so update the local one.
         echo "Updating ${OPT_BRANCH} from origin."
         git merge origin/${OPT_BRANCH}
