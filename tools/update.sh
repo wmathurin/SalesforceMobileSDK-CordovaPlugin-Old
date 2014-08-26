@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x
+#set -x
 
 OPT_BUILD="yes"
 OPT_BRANCH="master"
@@ -30,7 +30,7 @@ parse_opts ()
     valid_branch_regex='^[a-zA-Z0-9][a-zA-Z0-9]*(/[a-zA-Z0-9][a-zA-Z0-9]*)?$'
     if [[ "${OPT_BRANCH}" =~ $valid_branch_regex ]]; then
         # No action
-        echo -n ''
+        :
     else
         echo "${OPT_BRANCH} is not a valid branch name.  Should be in the format <[remote/]branch name>"
         exit 1
